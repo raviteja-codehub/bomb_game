@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bomb Squad</title>
+    <meta name="description" content="A strategic 2-player local multiplayer bomb avoidance game.">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="background-animation">
+        <div class="glow-orb orb-1"></div>
+        <div class="glow-orb orb-2"></div>
+        <div class="glow-orb orb-3"></div>
+    </div>
+    
+    <div class="game-container">
+        <!-- Main Menu -->
+        <div id="screen-main-menu" class="screen active">
+            <h1 class="title main-title">BOMB SQUAD</h1>
+            <p class="subtitle">A game of strategy and luck.</p>
+            <div class="rules-box glass">
+                <h3>How to play</h3>
+                <ul>
+                    <li>Each player secretly hides <strong>3 bombs</strong>.</li>
+                    <li>Take turns guessing safe squares.</li>
+                    <li>If you click 3 bombs, you <strong>LOSE</strong>.</li>
+                </ul>
+            </div>
+            <button class="btn primary-btn pulse" onclick="game.startGame()">Start Game</button>
+        </div>
+
+        <!-- Pass Device Screen -->
+        <div id="screen-pass-device" class="screen fade-hidden">
+            <div class="icon-wrap pass-icon">
+                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <h2 id="pass-title" class="title subtitle-lg">Secret Phase</h2>
+            <p id="pass-desc" class="subtitle">Hand the device to Player 1.</p>
+            <div class="warning-text">Look away, Player 2!</div>
+            <button id="pass-btn" class="btn primary-btn mt-2" onclick="game.acknowledgePass()">I'm Ready</button>
+        </div>
+
+        <!-- Turn Notice Screen -->
+        <div id="screen-turn-notice" class="screen fade-hidden">
+            <div class="player-indicator p1-color" id="turn-player-indicator">Player 1</div>
+            <h2 class="title subtitle-lg">Your Turn</h2>
+            <p class="subtitle">Find a safe square on the enemy board.</p>
+            <button class="btn primary-btn mt-2" onclick="game.acknowledgeTurn()">Show Board</button>
+        </div>
+
+        <!-- Game Board Screen -->
+        <div id="screen-board" class="screen fade-hidden">
+            <div class="board-header">
+                <div class="player-pill p1-color" id="board-player-pill">Player 1</div>
+                <div class="status-text" id="board-status">Place 3 Bombs</div>
+                <div class="bomb-counter glass" id="bomb-counter">
+                    <span class="bomb-icon">💣</span> <span id="bomb-count-val">0/3</span>
+                </div>
+            </div>
+            
+            <div id="health-bars" class="health-bars hidden">
+                <div class="health-bar-container">
+                    <span class="health-label p1-color-text">P1 Strikes</span>
+                    <div class="health-slots" id="p1-strikes">
+                        <div class="strike-slot"></div>
+                        <div class="strike-slot"></div>
+                        <div class="strike-slot"></div>
+                    </div>
+                </div>
+                <div class="health-bar-container">
+                    <span class="health-label p2-color-text">P2 Strikes</span>
+                    <div class="health-slots" id="p2-strikes">
+                        <div class="strike-slot"></div>
+                        <div class="strike-slot"></div>
+                        <div class="strike-slot"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-container" id="game-grid">
+                <!-- Squares injected by JS -->
+            </div>
+            <button id="board-action-btn" class="btn secondary-btn hidden mt-2" onclick="game.boardAction()">Confirm</button>
+        </div>
+
+        <!-- Game Over Screen -->
+        <div id="screen-game-over" class="screen fade-hidden">
+            <h1 class="title main-title" id="winner-text">PLAYER 1 WINS</h1>
+            <p class="subtitle" id="loser-text">Player 2 hit 3 bombs.</p>
+            
+            <div class="final-board-preview glass mt-2">
+                <h3>Final Boards Revealed</h3>
+                <div class="mini-boards">
+                    <div class="mini-board-wrap">
+                        <span>P1 Board</span>
+                        <div class="mini-grid" id="mini-grid-1"></div>
+                    </div>
+                    <div class="mini-board-wrap">
+                        <span>P2 Board</span>
+                        <div class="mini-grid" id="mini-grid-2"></div>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn primary-btn mt-2" onclick="game.resetGame()">Play Again</button>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
